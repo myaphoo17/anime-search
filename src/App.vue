@@ -15,7 +15,11 @@
 
     <main>
       <div class="cards">
-        <CardView v-for="anime in animeList" :key="anime.mal_id" :anime="anime" />
+        <CardView
+          v-for="anime in animeList"
+          :key="anime.mal_id"
+          :anime="anime"
+        />
       </div>
     </main>
   </div>
@@ -30,33 +34,34 @@ export default {
     const animeList = ref([]);
 
     const HandleSearch = async () => {
-  try {
-    const response = await fetch(`https://api.jikan.moe/v4/anime?q=${search_query.value}`);
-    const data = await response.json();
+      try {
+        const response = await fetch(
+          `https://api.jikan.moe/v4/anime?q=${search_query.value}`
+        );
+        const data = await response.json();
 
-    if (response.status >= 400) {
-      console.error("API request error:", response.status);
-      // Set an error message for the user
-      animeList.value = [];
-      return;
-    }
+        if (response.status >= 400) {
+          console.error("API request error:", response.status);
+          // Set an error message for the user
+          animeList.value = [];
+          return;
+        }
 
-    // Assuming you want to extract the 'data' array from the response
-    if (data && Array.isArray(data.data)) {
-      animeList.value = data.data;
-      console.log(animeList.value);
-    } else {
-      console.error("Invalid API response:", data);
-      // Set an error message for the user
-      animeList.value = [];
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    // Set an error message for the user
-    animeList.value = [];
-  }
-};
-
+        // Assuming you want to extract the 'data' array from the response
+        if (data && Array.isArray(data.data)) {
+          animeList.value = data.data;
+          console.log(animeList.value);
+        } else {
+          console.error("Invalid API response:", data);
+          // Set an error message for the user
+          animeList.value = [];
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Set an error message for the user
+        animeList.value = [];
+      }
+    };
 
     return {
       search_query,
@@ -77,8 +82,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background: linear-gradient(to right, #da4453, #89216b);
-
+  background: #333333;
 }
 
 a {
@@ -91,12 +95,12 @@ header {
 
   h1 {
     color: #ffffff;
-
+    font-family: "Courier New", Courier, monospace;
 
     font-size: 3rem;
     font-weight: 550;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: lowercase;
     margin-bottom: 2rem;
     animation: movetoleft 1s ease forwards;
 
@@ -105,34 +109,33 @@ header {
     }
   }
   @keyframes movetoleft {
-  0% {
-    opacity: 0;
-    transform: translateX(-30px);
+    0% {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    80% {
+      transform: translateX(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
-  80%{
-    transform: translateX(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
-@keyframes movetoBtm {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
+  @keyframes movetoBtm {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 
   .search-box {
     display: flex;
- 
+
     padding-left: 0px;
     padding-right: 0px;
     margin-left: 32%;
@@ -144,14 +147,14 @@ header {
       background: none;
       border: none;
       outline: none;
-      background-color: #421b0486;
+      background-color: #ffffff7a;
       box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.555);
       display: flex;
       width: 55%;
       max-width: 500px;
       padding: 15px;
       border-radius: 20px;
-      color: black;
+      color: rgb(99, 94, 96);
       font-size: 1rem;
       transition: 0.4s;
 
@@ -161,7 +164,8 @@ header {
       &:focus,
       &:valid {
         color: white;
-        background-color: #02020283;
+        background-color: #8a8484be;
+
         box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.15);
       }
     }
@@ -180,8 +184,9 @@ header {
 
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 10px 40px;
+  justify-content: center;
 
+  margin: 10px 40px;
 }
 
 .card {
@@ -191,17 +196,14 @@ header {
   margin-bottom: 16px;
   justify-content: space-between;
   background: none;
-
 }
 
 img {
   background: none;
 
-
-
   width: 65%;
   height: 280px;
-  object-fit:fill;
+  object-fit: fill;
   border-radius: 15px;
 
   transition: 0.4s;
@@ -219,11 +221,10 @@ h3 {
 }
 
 .card:hover h3 {
- color: #ffffff;
+  color: #ffffff;
 }
 
-@media only screen and (max-width: 650px) and (min-width: 200px)  {
-
+@media only screen and (max-width: 650px) and (min-width: 200px) {
   header {
     padding: 1rem 0 2rem;
 
@@ -233,20 +234,20 @@ h3 {
   }
 
   img {
-  background: none;
-  width: 90%;
-  height: 5rem;
-  object-fit:fill;
-  border-radius: 5px;
+    background: none;
+    width: 90%;
+    height: 5rem;
+    object-fit: fill;
+    border-radius: 5px;
 
-  transition: 0.4s;
-}
+    transition: 0.4s;
+  }
 
   .search-box {
     flex-direction: row;
 
     .search-field {
-      font-size: .5rem;
+      font-size: 0.5rem;
     }
   }
 
@@ -255,12 +256,10 @@ h3 {
   }
 
   .card {
-    font-size: .5rem;
+    font-size: 0.5rem;
     flex: 1 1 calc(33.333% - 1rem);
     max-width: calc(33.333% - 1rem);
     margin: 1px;
   }
-
-
 }
 </style>

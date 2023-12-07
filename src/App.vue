@@ -42,23 +42,23 @@ export default {
 
         if (response.status >= 400) {
           console.error("API request error:", response.status);
-          // Set an error message for the user
+      
           animeList.value = [];
           return;
         }
 
-        // Assuming you want to extract the 'data' array from the response
+  
         if (data && Array.isArray(data.data)) {
           animeList.value = data.data;
           console.log(animeList.value);
         } else {
           console.error("Invalid API response:", data);
-          // Set an error message for the user
+     
           animeList.value = [];
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        // Set an error message for the user
+  
         animeList.value = [];
       }
     };
